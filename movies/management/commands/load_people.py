@@ -22,7 +22,7 @@ class Command(BaseCommand):
     help = 'Loads entries from IMDb\'s name.basics file'
 
     def add_arguments(self, parser):
-        parser.add_argument("data_file", type=str)
+        parser.add_argument('data_file', type=str)
 
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
