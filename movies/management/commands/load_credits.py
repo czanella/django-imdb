@@ -18,6 +18,7 @@ def row_to_credit(movie, ordering, person, category, job, characters):
             person=person,
             ordering=int(ordering),
             name=name,
+            is_self=category == 'self',
         )
 
     return CrewMember(
