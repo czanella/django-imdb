@@ -10,7 +10,7 @@ def row_to_credit(movie, ordering, person, category, job, characters):
     if category == 'actor' or category == 'self':
         name = None
         try:
-            name = '|'.join(json.loads(characters)),
+            name = '|'.join(json.loads(characters))
         except:
             pass
         return Character(
