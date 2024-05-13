@@ -64,15 +64,15 @@ class Command(BaseCommand):
                 )
                 new_credits[new_credit.__class__].append(new_credit)
 
-            count += 1
-            if count % 100000 == 0:
-                self.stdout.write(f'{count} {datetime.now() - start}')
-                with transaction.atomic():
-                    for imdb_class in new_credits:
-                        self.stdout.write(f'Writing {imdb_class.__name__}')
-                        imdb_class.objects.bulk_create(new_credits[imdb_class])
-                        self.stdout.write(str(datetime.now() - start))
-                new_credits = defaultdict(lambda:[])
+                count += 1
+                if count % 100000 == 0:
+                    self.stdout.write(f'{count} {datetime.now() - start}')
+                    with transaction.atomic():
+                        for imdb_class in new_credits:
+                            self.stdout.write(f'Writing {imdb_class.__name__}')
+                            imdb_class.objects.bulk_create(new_credits[imdb_class])
+                            self.stdout.write(str(datetime.now() - start))
+                    new_credits = defaultdict(lambda:[])
 
         for imdb_class in new_credits:
             self.stdout.write(f'Writing last {imdb_class.__name__}')
