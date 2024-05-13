@@ -20,6 +20,8 @@ class Movie(models.Model):
     original_title = models.CharField(max_length=256)
     year = models.PositiveIntegerField(null=True, blank=True, default=None)
     runtime = models.PositiveIntegerField(null=True, blank=True, default=None)
+    rating = models.FloatField(default=0.0)
+    rating_votes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.primary_title
