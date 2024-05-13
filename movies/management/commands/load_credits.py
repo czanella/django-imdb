@@ -7,7 +7,7 @@ from movies.models import Movie, Person, Character, CrewMember
 from itertools import islice
 
 def row_to_credit(movie, ordering, person, category, job, characters):
-    if category == 'actor' or category == 'self':
+    if category == 'actor' or category == 'actress' or category == 'self':
         name = None
         try:
             name = '|'.join(json.loads(characters))
