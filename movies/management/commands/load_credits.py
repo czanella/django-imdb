@@ -25,7 +25,7 @@ def row_to_credit(movie, ordering, person, category, job, characters):
         person=person,
         ordering=int(ordering),
         job_category=category,
-        job=job,
+        job=job if job != '\\N' else None,
     )
 
 class Command(BaseCommand):

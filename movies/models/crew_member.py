@@ -22,5 +22,5 @@ class CrewMember(models.Model):
         on_delete=models.CASCADE,
     )
     job_category = models.CharField(max_length=256)
-    job = models.CharField(max_length=256)
+    job = models.CharField(max_length=256, null=True, blank=True, default=None)
     ordering = models.PositiveIntegerField()
