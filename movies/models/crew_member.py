@@ -23,3 +23,4 @@ class CrewMember(models.Model):
     )
     job_category = models.CharField(max_length=256)
     job = models.CharField(max_length=256)
+    ordering = models.PositiveIntegerField()

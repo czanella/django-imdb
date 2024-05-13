@@ -20,4 +20,8 @@ class Character(models.Model):
         related_name='movies_as_actor',
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=512)
+    name = models.CharField(max_length=512, null=True, blank=True, default=None)
+    ordering = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
