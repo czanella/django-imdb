@@ -17,7 +17,7 @@ class Character(models.Model):
     )
     person = models.ForeignKey(
         Person,
-        related_name='movies_as_actor',
+        related_name='characters',
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=512, null=True, blank=True, default=None)

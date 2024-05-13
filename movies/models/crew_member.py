@@ -18,7 +18,7 @@ class CrewMember(models.Model):
     )
     person = models.ForeignKey(
         Person,
-        related_name='movies_as_crew',
+        related_name='crew_works',
         on_delete=models.CASCADE,
     )
     job_category = models.CharField(max_length=256)
