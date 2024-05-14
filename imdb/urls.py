@@ -23,8 +23,8 @@ from movies.views import MovieViewSet, PersonViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', ImdbUserViewSet)
-router.register(r'movies', MovieViewSet)
-router.register(r'people', PersonViewSet)
+router.register(r'movies', MovieViewSet, basename='movie')
+router.register(r'people', PersonViewSet, basename='person')
 
 urlpatterns = [
     path('api/', include(router.urls)),
