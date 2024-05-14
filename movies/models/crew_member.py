@@ -24,3 +24,6 @@ class CrewMember(models.Model):
     job_category = models.CharField(max_length=256)
     job = models.CharField(max_length=256, null=True, blank=True, default=None)
     ordering = models.PositiveIntegerField()
+
+    def __str__(self):
+        return ' - '.join(filter(bool, (self.job_category, self.job)))

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator   
 
 class Person(models.Model):
     class Meta:
@@ -8,7 +9,16 @@ class Person(models.Model):
             models.Index(fields=['name']),
         ]
 
-    nconst = models.CharField(max_length=16, unique=True)
+    nconst = models.CharField(
+        max_length=16,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'nm\d{7}',
+                message='Value must be "nm" followed by 7 digits',
+            ),
+        ],
+    )
     name = models.CharField(max_length=256)
     year_of_birth = models.PositiveIntegerField(
         null=True,
@@ -20,6 +30,10 @@ class Person(models.Model):
         blank=True,
         default=None,
     )
+
+    @property
+    def url(self):
+        return f'https://imdb.com/name/{self.nconst}/'
 
     def __str__(self):
         return self.name

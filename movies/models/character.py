@@ -25,4 +25,4 @@ class Character(models.Model):
     is_self = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return '<no name>' if self.name is None else self.name
