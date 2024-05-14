@@ -22,7 +22,7 @@ from imdb_users.views import ImdbUserViewSet
 from movies.views import MovieViewSet, PersonViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', ImdbUserViewSet)
+router.register(r'users', ImdbUserViewSet, basename='imdbuser')
 router.register(r'movies', MovieViewSet, basename='movie')
 router.register(r'people', PersonViewSet, basename='person')
 
