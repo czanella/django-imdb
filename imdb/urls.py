@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+
 from imdb_users.views import ImdbUserViewSet
+from movies.views import MovieViewSet, PersonViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', ImdbUserViewSet)
+router.register(r'movies', MovieViewSet)
+router.register(r'people', PersonViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
