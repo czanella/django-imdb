@@ -9,5 +9,5 @@ class PersonSerializer(serializers.ModelSerializer):
             'name',
             'year_of_birth',
             'year_of_death',
-            'url',
+            'imdb_url',
         )

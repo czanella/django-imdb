@@ -34,7 +34,7 @@ class Movie(models.Model):
     rating_votes = models.PositiveIntegerField(default=0)
 
     @property
-    def url(self):
+    def imdb_url(self):
         return f'https://imdb.com/title/{self.tconst}/'
 
     def __str__(self):

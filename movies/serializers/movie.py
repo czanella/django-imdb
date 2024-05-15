@@ -13,5 +13,5 @@ class MovieSerializer(serializers.ModelSerializer):
             'runtime',
             'rating',
             'rating_votes',
-            'url',
+            'imdb_url',
         )

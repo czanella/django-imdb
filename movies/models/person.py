@@ -32,7 +32,7 @@ class Person(models.Model):
     )
 
     @property
-    def url(self):
+    def imdb_url(self):
         return f'https://imdb.com/name/{self.nconst}/'
 
     def __str__(self):
