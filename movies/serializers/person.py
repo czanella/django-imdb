@@ -5,6 +5,7 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = (
+            'url',
             'nconst',
             'name',
             'year_of_birth',
