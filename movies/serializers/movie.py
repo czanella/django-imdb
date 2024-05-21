@@ -5,6 +5,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = (
+            'id',
             'tconst',
             'type',
             'primary_title',
