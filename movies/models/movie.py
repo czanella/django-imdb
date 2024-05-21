@@ -21,7 +21,7 @@ class Movie(models.Model):
         validators=[
             RegexValidator(
                 regex=r'tt\d{7}',
-                message='Value must be "tt" followed by 7 digits',
+                message='Value must be "tt" followed by 7 digits.',
             ),
         ],
     )

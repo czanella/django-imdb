@@ -15,7 +15,7 @@ class Person(models.Model):
         validators=[
             RegexValidator(
                 regex=r'nm\d{7}',
-                message='Value must be "nm" followed by 7 digits',
+                message='Value must be "nm" followed by 7 digits.',
             ),
         ],
     )
