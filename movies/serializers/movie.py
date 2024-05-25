@@ -1,5 +1,15 @@
 from rest_framework import serializers
 from movies.models import Movie
+from .character import CharacterSerializer
+
+class ListMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = (
+            'url',
+            'primary_title',
+        )
+
 
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +25,7 @@ class MovieSerializer(serializers.ModelSerializer):
             'rating',
             'rating_votes',
             'imdb_url',
+            'characters',
         )
+
+    characters = CharacterSerializer(many=True)
