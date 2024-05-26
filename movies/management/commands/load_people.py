@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from movies.models import Person
 from itertools import islice
 
@@ -24,6 +25,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('data_file', type=str)
 
+    @transaction.atomic
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
         new_people = []

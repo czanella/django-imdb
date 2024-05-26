@@ -26,8 +26,8 @@ class Movie(models.Model):
         ],
     )
     type = models.CharField(max_length=16, choices=MOVIE_TYPES, default='movie')
-    primary_title = models.CharField(max_length=256)
-    original_title = models.CharField(max_length=256)
+    primary_title = models.CharField(max_length=512)
+    original_title = models.CharField(max_length=512)
     year = models.PositiveIntegerField(null=True, blank=True, default=None)
     runtime = models.PositiveIntegerField(null=True, blank=True, default=None)
     rating = models.FloatField(default=0.0)
