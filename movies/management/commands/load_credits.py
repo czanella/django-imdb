@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from movies.models import Movie, Person, Character, CrewMember
 from itertools import islice
 
-def row_to_credit(movie, ordering, person, category, job, characters):
+def row_to_credit(movie_id, ordering, person_id, category, job, characters):
     if category == 'actor' or category == 'actress' or category == 'self':
         name = None
         try:
@@ -13,16 +13,16 @@ def row_to_credit(movie, ordering, person, category, job, characters):
         except:
             pass
         return Character(
-            movie=movie,
-            person=person,
+            movie_id=movie_id,
+            person_id=person_id,
             ordering=int(ordering),
             name=name,
             is_self=category == 'self',
         )
 
     return CrewMember(
-        movie=movie,
-        person=person,
+        movie_id=movie_id,
+        person_id=person_id,
         ordering=int(ordering),
         job_category=category,
         job=job if job != '\\N' else None,
@@ -45,27 +45,27 @@ class Command(BaseCommand):
         count = 0
 
         self.stdout.write('Loading movies...')
-        movie_queryset = Movie.objects.all()
+        movie_queryset = Movie.objects.values('id', 'tconst')
         if max_tconst:
             movie_queryset = movie_queryset.filter(tconst__gt=max_tconst)
-        movies = {movie.tconst:movie for movie in movie_queryset}
+        movies = {movie['tconst']:movie['id'] for movie in movie_queryset}
         self.stdout.write(f'done {datetime.now() - start}')
 
         self.stdout.write('Loading people...')
-        people = {person.nconst:person for person in Person.objects.all()}
+        people = {person['nconst']:person['id'] for person in Person.objects.values('id', 'tconst')}
         self.stdout.write(f'done {datetime.now() - start}')
 
         for row in islice(open(options['data_file']), 1, None):
             tconst, ordering, nconst, category, job, characters = row.split('\t')[:6]
             if max_tconst and tconst <= max_tconst:
                 continue
-            movie = movies.get(tconst, None)
-            person = people.get(nconst, None)
-            if movie and person:
+            movie_id = movies.get(tconst, None)
+            person_id = people.get(nconst, None)
+            if movie_id is not None and person_id is not None:
                 new_credit = row_to_credit(
-                    movie,
+                    movie_id,
                     ordering,
-                    person,
+                    person_id,
                     category,
                     job,
                     characters,
