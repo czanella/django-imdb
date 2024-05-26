@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
-        max_nconst = Person.objects.order_by('-nconst').first().nconst if Person.objects.exists() else None
+        max_nconst = Person.objects.last().nconst if Person.objects.exists() else None
         new_people = []
         count = 0
         for row in islice(open(options['data_file']), 1, None):

@@ -41,7 +41,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
-        max_tconst = Movie.objects.order_by('-tconst').first().tconst if Movie.objects.exists() else None
+        max_tconst = Movie.objects.last().tconst if Movie.objects.exists() else None
         new_movies = []
         count = 0
         for row in islice(open(options['data_file']), 1, None):
