@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
-from django.db import transaction
 from movies.models import Person
 from itertools import islice
 
-def row_to_person(row):
+def row_to_person(row, max_nconst=None):
     nconst, name, year_of_birth, year_of_death = row.split('\t')[:4]
+    if max_nconst and nconst <= max_nconst:
+        return None
+
     new_person = Person(nconst=nconst, name=name)
 
     try:
@@ -25,13 +27,16 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('data_file', type=str)
 
-    @transaction.atomic
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
+        max_nconst = Person.objects.order_by('-nconst').first().nconst if Person.objects.exists() else None
         new_people = []
         count = 0
         for row in islice(open(options['data_file']), 1, None):
-            new_people.append(row_to_person(row))
+            new_person = row_to_person(row, max_nconst)
+            if not new_person:
+                continue
+            new_people.append()
             if len(new_people) >= 100000:
                 Person.objects.bulk_create(new_people)
                 count += len(new_people)
