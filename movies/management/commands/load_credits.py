@@ -40,6 +40,10 @@ class Command(BaseCommand):
         max_tconst_from_character = Character.objects.last().movie.tconst if Character.objects.exists() else ''
         max_tconst = max(max_tconst_from_crewmember, max_tconst_from_character) or None
 
+        if max_tconst:
+            CrewMember.objects.filter(movie__tconst=max_tconst).delete()
+            Character.objects.filter(movie__tconst=max_tconst).delete()
+
         start = datetime.now()
         new_credits = defaultdict(lambda:[])
         count = 0
@@ -52,12 +56,12 @@ class Command(BaseCommand):
         self.stdout.write(f'done {datetime.now() - start}')
 
         self.stdout.write('Loading people...')
-        people = {person['nconst']:person['id'] for person in Person.objects.values('id', 'tconst')}
+        people = {person['nconst']:person['id'] for person in Person.objects.values('id', 'nconst')}
         self.stdout.write(f'done {datetime.now() - start}')
 
         for row in islice(open(options['data_file']), 1, None):
             tconst, ordering, nconst, category, job, characters = row.split('\t')[:6]
-            if max_tconst and tconst <= max_tconst:
+            if max_tconst and tconst < max_tconst:
                 continue
             movie_id = movies.get(tconst, None)
             person_id = people.get(nconst, None)
