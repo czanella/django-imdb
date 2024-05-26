@@ -1,15 +1,17 @@
 from django.core.management.base import BaseCommand
-from django.db import transaction
 from movies.models import Movie
 from itertools import islice
 
-def row_to_movie(row):
+def row_to_movie(row, max_tconst=None):
     tconst, type, primary_title, original_title, is_adult, year, _, runtime = row.split('\t')[:8]
 
     if is_adult != '0':
         return None
 
     if type != 'short' and type != 'movie':
+        return None
+
+    if max_tconst and tconst <= max_tconst:
         return None
 
     new_movie = Movie(
@@ -37,13 +39,13 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('data_file', type=str)
 
-    @transaction.atomic
     def handle(self, *args, **options):
         self.stdout.write(f'Loading from {options['data_file']}')
+        max_tconst = Movie.objects.order_by('-tconst').first().tconst if Movie.objects.exists() else None
         new_movies = []
         count = 0
         for row in islice(open(options['data_file']), 1, None):
-            new_movie = row_to_movie(row)
+            new_movie = row_to_movie(row, max_tconst)
             if not new_movie:
                 continue
             new_movies.append(row_to_movie(row))
