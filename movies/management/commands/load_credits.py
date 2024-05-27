@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from collections import defaultdict
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from movies.models import Movie, Person, Character, CrewMember
 from itertools import islice
 
@@ -79,10 +80,11 @@ class Command(BaseCommand):
                 count += 1
                 if count % 100000 == 0:
                     self.stdout.write(f'{count} {datetime.now() - start}')
-                    for imdb_class in new_credits:
-                        self.stdout.write(f'Writing {imdb_class.__name__}')
-                        imdb_class.objects.bulk_create(new_credits[imdb_class])
-                        self.stdout.write(str(datetime.now() - start))
+                    with transaction.atomic():
+                        for imdb_class in new_credits:
+                            self.stdout.write(f'Writing {imdb_class.__name__}')
+                            imdb_class.objects.bulk_create(new_credits[imdb_class])
+                            self.stdout.write(str(datetime.now() - start))
                     new_credits = defaultdict(lambda:[])
 
         for imdb_class in new_credits:
