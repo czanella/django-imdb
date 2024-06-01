@@ -19,12 +19,13 @@ from django.urls import path, include
 from rest_framework import routers
 
 from imdb_users.views import ImdbUserViewSet
-from movies.views import MovieViewSet, PersonViewSet
+from movies.views import MovieViewSet, PersonViewSet, PersonCharactersListView
 
 router = routers.DefaultRouter()
 router.register(r'users', ImdbUserViewSet, basename='imdbuser')
 router.register(r'movies', MovieViewSet, basename='movie')
 router.register(r'people', PersonViewSet, basename='person')
+router.register(r'people/<int:personId>/characters', PersonCharactersListView, basename='person_characters')
 
 urlpatterns = [
     path('api/', include(router.urls)),
