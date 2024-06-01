@@ -25,10 +25,10 @@ router = routers.DefaultRouter()
 router.register(r'users', ImdbUserViewSet, basename='imdbuser')
 router.register(r'movies', MovieViewSet, basename='movie')
 router.register(r'people', PersonViewSet, basename='person')
-router.register(r'people/<int:personId>/characters', PersonCharactersListView, basename='person_characters')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/people/<int:personId>/characters/', PersonCharactersListView.as_view()),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
 ]

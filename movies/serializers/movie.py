@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from movies.models import Movie
-from .character import CharacterPersonSerializer
-from .crew_member import CrewMemberPersonSerializer
+from movies.models import Movie, Character, CrewMember
+from .person import PreviewPersonSerializer
 
 class PreviewMovieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,6 +10,30 @@ class PreviewMovieSerializer(serializers.ModelSerializer):
             'primary_title',
             'original_title',
         )
+
+
+class CharacterPersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Character
+        fields = (
+            'name',
+            'is_self',
+            'person',
+        )
+
+    person = PreviewPersonSerializer()
+
+
+class CrewMemberPersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrewMember
+        fields = (
+            'job',
+            'job_category',
+            'person',
+        )
+
+    person = PreviewPersonSerializer()
 
 
 class MovieSerializer(serializers.ModelSerializer):
