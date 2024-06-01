@@ -175,6 +175,3 @@ cython_debug/
 
 # Data files downloaded from IMDb
 _data/
-
-# Virtual environment
-env/

@@ -12,3 +12,12 @@ class PersonSerializer(serializers.ModelSerializer):
             'year_of_death',
             'imdb_url',
         )
+
+
+class PreviewPersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = (
+            'url',
+            'name',
+        )

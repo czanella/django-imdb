@@ -1,3 +1,3 @@
-from .movie import MovieSerializer, ListMovieSerializer
-from .person import PersonSerializer
+from .movie import MovieSerializer, PreviewMovieSerializer
+from .person import PersonSerializer, PreviewPersonSerializer
 from .character import CharacterSerializer

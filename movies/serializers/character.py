@@ -1,15 +1,14 @@
 from rest_framework import serializers
 from movies.models import Character
-from .person import PersonSerializer
+from .person import PreviewPersonSerializer
 
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
         fields = (
-            'id',
             'name',
             'is_self',
             'person',
         )
 
-    person = PersonSerializer()
+    person = PreviewPersonSerializer()

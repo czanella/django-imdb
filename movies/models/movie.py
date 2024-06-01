@@ -13,6 +13,7 @@ class Movie(models.Model):
         indexes = [
             models.Index(fields=['primary_title']),
             models.Index(fields=['original_title']),
+            models.Index(fields=['year']),
         ]
 
     tconst = models.CharField(

@@ -2,12 +2,13 @@ from rest_framework import serializers
 from movies.models import Movie
 from .character import CharacterSerializer
 
-class ListMovieSerializer(serializers.ModelSerializer):
+class PreviewMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = (
             'url',
             'primary_title',
+            'original_title',
         )
 
 
