@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from movies.models import Movie
 from .character import CharacterSerializer
+from .crew_member import CrewMemberSerializer
 
 class PreviewMovieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,6 +28,8 @@ class MovieSerializer(serializers.ModelSerializer):
             'rating_votes',
             'imdb_url',
             'characters',
+            'crew_members',
         )
 
     characters = CharacterSerializer(many=True)
+    crew_members = CrewMemberSerializer(many=True)
