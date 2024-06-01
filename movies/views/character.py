@@ -6,7 +6,8 @@ class PersonCharactersListView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Character.objects\
             .select_related('movie')\
-            .filter(person_id=self.kwargs['personId'])
+            .filter(person_id=self.kwargs['personId'])\
+            .order_by('movie__year')
         return queryset
 
     serializer_class = CharacterMovieSerializer

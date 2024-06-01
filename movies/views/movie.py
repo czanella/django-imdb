@@ -11,7 +11,7 @@ class MovieViewSet(viewsets.ModelViewSet):
             Prefetch('crew_members', queryset=CrewMember.objects.order_by('ordering')),
             'crew_members__person',
         )\
-        .order_by('year')
+        .order_by('tconst')
     filter_backends = [filters.SearchFilter]
     search_fields = ['primary_title', 'original_title']
 
