@@ -6,8 +6,10 @@ from django.db import transaction
 from movies.models import Movie, Person, Character, CrewMember
 from itertools import islice
 
+acting_jobs = { 'actor', 'actress', 'self', 'archive_footage' }
+
 def row_to_credit(movie_id, ordering, person_id, category, job, characters):
-    if category == 'actor' or category == 'actress' or category == 'self':
+    if category in acting_jobs:
         name = None
         try:
             name = '|'.join(json.loads(characters))
