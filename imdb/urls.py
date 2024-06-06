@@ -22,19 +22,27 @@ from imdb_users.views import ImdbUserViewSet
 from movies.views import (
     MovieViewSet,
     PersonViewSet,
-    PersonCharactersListView,
-    PersonCrewMembersListView,
+    PersonCharactersViewSet,
+    PersonCrewMemberViewSet,
 )
 
 router = routers.DefaultRouter()
 router.register(r'users', ImdbUserViewSet, basename='imdbuser')
 router.register(r'movies', MovieViewSet, basename='movie')
 router.register(r'people', PersonViewSet, basename='person')
+router.register(
+    r'people/(?P<personId>[^/.]+)/characters',
+    PersonCharactersViewSet,
+    basename='person_character',
+)
+router.register(
+    r'people/(?P<personId>[^/.]+)/crew',
+    PersonCrewMemberViewSet,
+    basename='person_crew_member',
+)
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('api/people/<int:personId>/characters/', PersonCharactersListView.as_view()),
-    path('api/people/<int:personId>/crew/', PersonCrewMembersListView.as_view()),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
 ]

@@ -1,8 +1,11 @@
-from rest_framework import generics
+from rest_framework import viewsets, mixins
 from movies.models import Character
 from movies.serializers import CharacterMovieSerializer
 
-class PersonCharactersListView(generics.ListAPIView):
+class PersonCharactersViewSet(
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
     def get_queryset(self):
         queryset = Character.objects\
             .select_related('movie')\
