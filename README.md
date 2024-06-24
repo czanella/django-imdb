@@ -22,4 +22,4 @@ At this point the API is already usable, but to make it more interesting you can
 * `python manage.py load_credits <path to title.principals.tsv>` - loads information about characters and crew members
 * `python manage.py load_ratings <path to title.ratings.tsv>` - loads rating scores for movies
 
-These datasets are fairly large and take a while to run - some might take around 10 minutes, but the heavier ones, like `load_credits` can take several hours.
+These datasets are fairly large and take a while to run - some might take around 10 minutes, but the heavier ones, like `load_credits`, can take several hours.
